@@ -6,10 +6,22 @@ document.querySelector('body').appendChild(widget.widget);
 form.addEventListener('click', showWidget);
 
 
-
 function showWidget(event) {
   const element = event.target;
+  if (element.tagName === 'BUTTON' && widget.isShow) {
+    widget.hide();
+  } else if (element.tagName === 'BUTTON') {
+    widget.show(element);
+    form.addEventListener('mouseout', hideWidget);
+  }
+}
+
+function hideWidget(event) {
+  const element = event.target;
   if (element.tagName === 'BUTTON') {
-    widget.widgetShow(element);
+    setTimeout(() => {
+      widget.hide();
+      form.removeEventListener('mouseout', hideWidget);
+    }, 200);
   }
 }

@@ -5,6 +5,7 @@ export default class Widget {
     this.popoverBody = this.#createPopoverBody();
     this.arrowElement = this.#createArrowElement();
     this.widget = this.#createWidget();
+    this.isShow = false;
   }
 
   #createWidget() {
@@ -36,17 +37,23 @@ export default class Widget {
     return arrowElement;
   }
 
-  widgetShow(element) {
+  show(element) {
     const cord = element.getBoundingClientRect();
     this.popoverTitle.textContent = element.dataset.title;
     this.popoverBody.textContent = element.dataset.text;
     this.arrowElement.style.left = "45%";
-    this.widget.classList.toggle("show");
+    this.widget.classList.add("show");
+    this.isShow = true;
     const position = this.#calculatePosition(
       cord.top, cord.left, cord.width
     );
     this.widget.style.top = `${position.top}px`;
     this.widget.style.left = `${position.left}px`;
+  }
+
+  hide() {
+    this.widget.classList.remove("show");
+    this.isShow = false;
   }
 
   #calculatePosition(elementTop, elementLeft, elementWidth) {
