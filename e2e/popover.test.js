@@ -1,7 +1,6 @@
-import puppeteer from 'puppeteer';
+import puppeteer from "puppeteer";
 
-
-describe('Page start', () => {
+describe("Page start", () => {
   let browser;
   let page;
 
@@ -15,44 +14,39 @@ describe('Page start', () => {
     page = await browser.newPage();
   });
 
-  test('Form and popover should be render on the page', async () => {
-    await page.goto('http://localhost:9000/');
+  test("Popover should be render when clicked", async () => {
+    const text =
+      "А здесь размещается какой-то текстовый контент к выбранному элементу";
+    await page.goto("http://localhost:9000/");
 
-    await page.waitForSelector('.form-example');
-  });
+    await page.waitForSelector(".form-example");
 
-  test('Popover should be render when clicked', async () => {
-    const text = 'А здесь размещается какой-то текстовый контент к выбранному элементу';
-    await page.goto('http://localhost:9000/');
-
-    await page.waitForSelector('.form-example');
-
-    const button = await page.$('.btn');
+    const button = await page.$(".btn");
     await button.click();
-    const popover = await page.waitForSelector('.popover');
+    const popover = await page.waitForSelector(".popover");
     const popoverTextContent = await popover.evaluate((popover) => {
-      const popoverBody = popover.querySelector('.popover-body');
+      const popoverBody = popover.querySelector(".popover-body");
       return popoverBody.textContent;
     });
     expect(popoverTextContent).toEqual(text);
   });
 
-  test('Change popover text content', async () => {
-    await page.goto('http://localhost:9000/');
+  test("Change popover text content", async () => {
+    await page.goto("http://localhost:9000/");
 
-    await page.waitForSelector('.form-example');
+    await page.waitForSelector(".form-example");
 
-    const button = await page.$('.btn');
+    const button = await page.$(".btn");
     await button.evaluate((button) => {
-      button.dataset.text = 'Изменили содержимое';
+      button.dataset.text = "Изменили содержимое";
     });
     await button.click();
-    const popover = await page.$('.popover');
+    const popover = await page.$(".popover");
     const popoverTextContent = await popover.evaluate((popover) => {
-      const popoverBody = popover.querySelector('.popover-body');
+      const popoverBody = popover.querySelector(".popover-body");
       return popoverBody.textContent;
     });
-    expect(popoverTextContent).toEqual('Изменили содержимое');
+    expect(popoverTextContent).toEqual("Изменили содержимое");
   });
 
   afterEach(async () => {

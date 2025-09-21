@@ -1,5 +1,4 @@
 export default class Widget {
-
   constructor() {
     this.popoverTitle = this.#createPopoverTitle();
     this.popoverBody = this.#createPopoverBody();
@@ -44,9 +43,7 @@ export default class Widget {
     this.arrowElement.style.left = "45%";
     this.widget.classList.add("show");
     this.isShow = true;
-    const position = this.#calculatePosition(
-      cord.top, cord.left, cord.width
-    );
+    const position = this.#calculatePosition(cord.top, cord.left, cord.width);
     this.widget.style.top = `${position.top}px`;
     this.widget.style.left = `${position.left}px`;
   }
@@ -57,7 +54,8 @@ export default class Widget {
   }
 
   #calculatePosition(elementTop, elementLeft, elementWidth) {
-    let top = elementTop - this.widget.offsetHeight - this.arrowElement.offsetHeight;
+    let top =
+      elementTop - this.widget.offsetHeight - this.arrowElement.offsetHeight;
     let left = elementLeft + (elementWidth - this.widget.offsetWidth) / 2;
     top = top < 0 ? 0 : top;
     left = left < 0 ? 0 : left;
